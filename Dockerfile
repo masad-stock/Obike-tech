@@ -20,14 +20,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy application code
+# Copy composer files and install dependencies (for better Docker caching)
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Copy the rest of the application code
 COPY . .
 
-# Make build.sh executable
-RUN chmod +x build.sh
-
-# Run build script
-RUN ./build.sh
+# Make build.sh executable and run it
+RUN chmod +x build.sh && ./build.sh
 
 # Expose port for Octane
 EXPOSE 8080
