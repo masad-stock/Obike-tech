@@ -1,22 +1,10 @@
 #!/bin/bash
-# Exit on error
 set -e
 
-# Install PHP extensions
-apt-get update && apt-get install -y \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
-
-# Install Swoole
-pecl install swoole
-docker-php-ext-enable swoole
-
-# Install dependencies
 composer install --no-interaction --prefer-dist --optimize-autoloader
 npm ci
 npm run production
 
-# Prepare Laravel application
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
