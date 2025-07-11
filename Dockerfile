@@ -4,7 +4,7 @@ FROM php:8.2-cli
 # Install system dependencies and PHP extensions
 RUN apt-get update \
     && apt-get install -y libpq-dev git unzip curl libzip-dev libpng-dev libonig-dev libbrotli-dev \
-    && docker-php-ext-install pdo pdo_pgsql zip mbstring exif pcntl bcmath
+    && docker-php-ext-install pdo pdo_pgsql zip mbstring exif pcntl bcmath gd
 
 # Install Swoole for Octane
 RUN pecl install swoole \
