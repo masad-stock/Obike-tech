@@ -20,12 +20,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer.json and install dependencies (skip composer.lock)
-COPY composer.json ./
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-
-# Copy the rest of the application code
+# Copy the entire application code (including artisan)
 COPY . .
+
+# Install dependencies
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Make build.sh executable and run it
 RUN chmod +x build.sh && ./build.sh
