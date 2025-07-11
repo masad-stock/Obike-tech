@@ -23,6 +23,9 @@ WORKDIR /var/www/html
 # Copy the entire application code (including artisan)
 COPY . .
 
+# Ensure bootstrap/cache exists and is writable
+RUN mkdir -p bootstrap/cache && chmod -R 775 bootstrap/cache
+
 # Install dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
