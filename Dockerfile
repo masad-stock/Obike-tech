@@ -20,8 +20,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files and install dependencies (for better Docker caching)
-COPY composer.json composer.lock ./
+# Copy composer.json and install dependencies (skip composer.lock)
+COPY composer.json ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Copy the rest of the application code
